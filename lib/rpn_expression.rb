@@ -28,6 +28,37 @@ class RPNExpression
         rhs = stack.pop
         lhs = stack.pop
         stack.push(lhs - rhs)
+      elsif token == "/"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push(lhs / rhs)
+      elsif token == "^"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push(lhs ** rhs)
+      elsif token == "%"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push(lhs % rhs)
+      elsif token == "max"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push([lhs, rhs].max)
+      elsif token == "min"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push([lhs, rhs].min)
+      elsif token == "rand"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push(rand(lhs..rhs))
+      elsif token == "sample"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push([lhs, rhs].sample)
+      elsif token == "!"
+        num = stack.pop
+        stack.push(factorial(num))
       else
         raise "omg what is this token?"
       end
