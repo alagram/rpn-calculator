@@ -1,3 +1,15 @@
+require "stack"
+
+def factorial(n)
+  result = 1
+
+  n.downto(1) do |i|
+    result *= i
+  end
+
+  result
+end
+
 class RPNExpression
   # Returns an object representing the supplied RPN expression
   #
