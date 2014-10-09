@@ -10,6 +10,14 @@ def factorial(n)
   result
 end
 
+SYMBOL_TABLE = {
+  "+" => lambda { |x, y| x + y },
+  "*" => lambda { |x, y| x * y },
+  "-" => lambda { |x, y| x - y },
+  "!" => lambda { |n| factorial(n) },
+  "%" => lambda { |x, y| x % y }
+}
+
 class RPNExpression
   # Returns an object representing the supplied RPN expression
   #
@@ -28,49 +36,13 @@ class RPNExpression
     tokens.each do |token|
       if numeric?(token)
         stack.push(token.to_i)
-      elsif token == "+"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push(lhs + rhs)
-      elsif token == "*"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push(lhs * rhs)
-      elsif token == "-"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push(lhs - rhs)
-      elsif token == "/"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push(lhs / rhs)
-      elsif token == "^"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push(lhs ** rhs)
-      elsif token == "%"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push(lhs % rhs)
-      elsif token == "max"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push([lhs, rhs].max)
-      elsif token == "min"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push([lhs, rhs].min)
-      elsif token == "rand"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push(rand(lhs..rhs))
-      elsif token == "sample"
-        rhs = stack.pop
-        lhs = stack.pop
-        stack.push([lhs, rhs].sample)
-      elsif token == "!"
-        num = stack.pop
-        stack.push(factorial(num))
+      elsif operator?(token)
+        args = []
+        SYMBOL_TABLE[token].arity.times do
+          args.unshift(stack.pop)
+        end
+
+        stack.push(call_operator(token, *args))
       else
         raise "omg what is this token?"
       end
@@ -90,6 +62,10 @@ class RPNExpression
   end
 
   def operator?(token)
-    ["+", "*"].include?(token)
+    SYMBOL_TABLE.key?(token)
+  end
+
+  def call_operator(operator, *args)
+    SYMBOL_TABLE[operator].call(*args)
   end
 end
