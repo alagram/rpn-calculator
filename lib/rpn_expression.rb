@@ -11,7 +11,11 @@ class RPNExpression
   #
   # @return [Numeric] the evaluated RPN expression
   def evaluate
-    "Implement RPNExpression#evaluate in #{__FILE__}"
+    stack = Stack.new
+
+    tokens.each do |token|
+
+    end
   end
 
   private
@@ -21,8 +25,10 @@ class RPNExpression
   end
 
   def numeric?(token)
+    token =~ /^-?\d+$/
   end
 
   def operator?(token)
+    ["+", "*"].include?(token)
   end
 end
