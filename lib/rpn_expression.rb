@@ -14,8 +14,26 @@ class RPNExpression
     stack = Stack.new
 
     tokens.each do |token|
-
+      if numeric?(token)
+        stack.push(token.to_i)
+      elsif token == "+"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push(lhs + rhs)
+      elsif token == "*"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push(lhs * rhs)
+      elsif token == "-"
+        rhs = stack.pop
+        lhs = stack.pop
+        stack.push(lhs - rhs)
+      else
+        raise "omg what is this token?"
+      end
     end
+
+    stack.pop
   end
 
   private
@@ -29,6 +47,6 @@ class RPNExpression
   end
 
   def operator?(token)
-    ["+", "*"].include?(token)
+    ["+", "*", "-"].include?(token)
   end
 end
