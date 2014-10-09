@@ -90,6 +90,6 @@ class RPNExpression
   end
 
   def operator?(token)
-    ["+", "*", "-"].include?(token)
+    ["+", "*"].include?(token)
   end
 end
