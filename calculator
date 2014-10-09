@@ -12,6 +12,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 #
 
 require "rpn_expression"
+require "stack"
 
 loop do
   print "rpn> "
