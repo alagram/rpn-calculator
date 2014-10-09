@@ -13,4 +13,16 @@ class RPNExpression
   def evaluate
     "Implement RPNExpression#evaluate in #{__FILE__}"
   end
+
+  private
+
+  def tokens
+    @expr.split(" ")
+  end
+
+  def numeric?(token)
+  end
+
+  def operator?(token)
+  end
 end
