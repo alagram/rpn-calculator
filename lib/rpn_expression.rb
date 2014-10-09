@@ -15,7 +15,10 @@ SYMBOL_TABLE = {
   "*" => lambda { |x, y| x * y },
   "-" => lambda { |x, y| x - y },
   "!" => lambda { |n| factorial(n) },
-  "%" => lambda { |x, y| x % y }
+  "%" => lambda { |x, y| x % y },
+  "wiggle" => lambda { |x, y, z| x * y + z },
+  "if" => lambda { |x, y, z| x == 0 ? y : z },
+  ">" => lambda { |x, y| x > y ? 1 : 0 }
 }
 
 class RPNExpression
