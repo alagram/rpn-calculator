@@ -13,7 +13,7 @@ class Stack
   end
 
   def push(val)
-    stack.push(val)
+    @stack.push(val)
   end
 
   def pop
